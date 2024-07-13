@@ -1,0 +1,54 @@
+@import "./styles/variables.scss";
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+html,
+body,
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+html,
+body,
+app-root {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-body-color);
+  color: var(--body-color);
+}
+app-root {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  position: relative;
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 0 0.1rem 0.2rem #000000;
+  padding: 1rem;
+}
+h1::after {
+  content: "";
+  background: white;
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+}
+
+h2 {
+  font-size: 22px;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+}
