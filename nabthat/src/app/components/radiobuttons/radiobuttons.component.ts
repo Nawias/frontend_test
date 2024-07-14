@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RadioOption } from '../../../types';
 
 @Component({
   selector: 'app-radiobuttons',
@@ -14,7 +15,7 @@ export class RadiobuttonsComponent {
   @Output() selectedOptionChange: EventEmitter<number> =
     new EventEmitter<number>();
 
-  @Input() options!: Array<{ id: number; label: string }>;
+  @Input() options!: Array<RadioOption>;
 
   onOptionChange(event: any) {
     this.selectedOption = event.target.value;

@@ -8,13 +8,15 @@
       ></app-radiobuttons>
     </app-block>
     <app-block header="blok drugi">
-      <button type="button">Zastąp</button>
-      <button type="button">Doklej</button>
+      <button type="button" (click)="replaceArticle()">Zastąp</button>
+      <button type="button" (click)="addArticle()">Doklej</button>
     </app-block>
     <app-block
       header="blok z długą nazwą która sama się przytnie dzięki stylom"
     >
-      <app-article></app-article>
+      @for (article of renderedArticles; track article.id) {
+      <article>{{ article.content }}</article>
+      }
     </app-block>
   </div>
 </div>

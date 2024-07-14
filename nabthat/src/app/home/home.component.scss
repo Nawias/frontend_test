@@ -35,6 +35,11 @@
     }
     button {
       background-color: transparent;
+      @include gradientAnimation(
+        var(--hover-color),
+        var(--hover-color-2),
+        var(--transition-duration)
+      );
       border: 0.1rem solid var(--button-border-color);
       border-radius: 0.2rem;
       padding: 1rem 4rem;
@@ -43,6 +48,15 @@
       font-weight: 700;
       color: var(--button-color);
       text-transform: uppercase;
+      transition: color var(--transition-duration) ease;
+      &:hover {
+        color: white;
+      }
     }
   }
+}
+article {
+  color: var(--article-color);
+  text-align: center;
+  font-weight: 100;
 }

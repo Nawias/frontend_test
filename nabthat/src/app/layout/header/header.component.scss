@@ -22,13 +22,13 @@
   aspect-ratio: 1;
   height: 4em;
   background-color: var(--header-logo-bg-color);
+  transition: var(--transition-duration) background-color ease-in-out;
   border-radius: 2em;
+  &:hover {
+    background-color: var(--hover-color);
+  }
   svg {
     aspect-ratio: 1;
     padding: 0.75em;
-
-    &:hover {
-      background-color: var(--hover-color);
-    }
   }
 }
