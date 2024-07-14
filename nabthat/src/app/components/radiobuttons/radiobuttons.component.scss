@@ -1,0 +1,48 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 100;
+}
+
+label {
+  display: flex;
+  gap: 1rem;
+}
+
+input[type="radio"] {
+  appearance: none;
+  background-color: transparent;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 50%;
+  transform: translateY(0.2em);
+
+  display: grid;
+  place-content: center;
+
+  &::before {
+    content: "";
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--button-border-color);
+  }
+  &:checked::before {
+    transform: scale(1);
+  }
+}
