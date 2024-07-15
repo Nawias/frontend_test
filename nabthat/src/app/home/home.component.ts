@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
   isAlertModalVisible: boolean = false;
   isDeleteModalVisible: boolean = false;
   isEditModalVisible: boolean = false;
+  isAddModalVisible: boolean = false;
 
   onOptionChanged(option: number) {
     this.option = option;
@@ -104,8 +105,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  toggleAddModal() {}
-
   openDeleteModal(article: Article) {
     this.isDeleteModalVisible = true;
     this.selectedArticle = article;
@@ -127,6 +126,18 @@ export class HomeComponent implements OnInit {
     this.isEditModalVisible = false;
     if (shouldSubmit) {
       this.articleService.edit(this.selectedArticle);
+    }
+    this.fetchArticles();
+  }
+
+  openAddModal() {
+    this.selectedArticle = { id: 0, content: '' };
+    this.isAddModalVisible = true;
+  }
+  confirmAdd(shouldSubmit: boolean) {
+    this.isAddModalVisible = false;
+    if (shouldSubmit) {
+      this.articleService.add(this.selectedArticle.content);
     }
     this.fetchArticles();
   }

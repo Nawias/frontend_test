@@ -12,9 +12,7 @@
         Zastąp
       </button>
       <button type="button" class="btn" (click)="addArticle()">Doklej</button>
-      <button type="button" class="btn" (click)="toggleAddModal()">
-        Dodaj
-      </button>
+      <button type="button" class="btn" (click)="openAddModal()">Dodaj</button>
     </app-block>
     <app-block
       header="blok z długą nazwą która sama się przytnie dzięki stylom"
@@ -47,6 +45,19 @@
   (ok)="confirmEdit(true)"
 >
   <h2>Edytuj artykuł</h2>
+  <textarea
+    class="editor"
+    rows="4"
+    [(ngModel)]="selectedArticle.content"
+  ></textarea>
+</app-alert-modal>
+<app-alert-modal
+  *ngIf="isAddModalVisible"
+  [dialog]="true"
+  (close)="confirmAdd(false)"
+  (ok)="confirmAdd(true)"
+>
+  <h2>Dodaj artykuł</h2>
   <textarea
     class="editor"
     rows="4"
