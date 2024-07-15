@@ -20,3 +20,6 @@
     </app-block>
   </div>
 </div>
+<app-alert-modal *ngIf="isModalVisible" (close)="hideAlert()">{{
+  alertMessage
+}}</app-alert-modal>

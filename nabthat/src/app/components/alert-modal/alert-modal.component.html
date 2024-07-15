@@ -1,0 +1,11 @@
+<div class="modal-backdrop" (click)="closeModal()"></div>
+<div class="modal">
+  <div class="modal-body">
+    <p>
+      <ng-content></ng-content>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button (click)="closeModal()">OK</button>
+  </div>
+</div>

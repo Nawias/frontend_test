@@ -1,5 +1,5 @@
 @import "./styles/variables.scss";
-
+@import "./styles/mixins";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 html,
@@ -53,4 +53,25 @@ h2 {
   font-weight: 600;
   text-align: center;
   text-transform: uppercase;
+}
+
+button {
+  background-color: transparent;
+  @include gradientAnimation(
+    var(--hover-color),
+    var(--hover-color-2),
+    var(--transition-duration)
+  );
+  border: 0.1rem solid var(--button-border-color);
+  border-radius: 0.2rem;
+  padding: 1rem 4rem;
+  width: min-content;
+  font-size: large;
+  font-weight: 700;
+  color: var(--button-color);
+  text-transform: uppercase;
+  transition: color var(--transition-duration) ease;
+  &:hover {
+    color: white;
+  }
 }
