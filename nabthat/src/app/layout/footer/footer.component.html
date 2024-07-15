@@ -1,26 +1,47 @@
 <div class="menu-wrapper">
   <div [ngClass]="menuVisible ? 'menu' : 'menu hidden'">
-    <button>Resetuj ustawienia</button>
+    <div class="container">
+      <a *ngFor="let option of options" (click)="onClick(option.action)">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10.5858 6.34317L12 4.92896L19.0711 12L12 19.0711L10.5858 17.6569L16.2427 12L10.5858 6.34317Z"
+            fill="currentColor"
+          />
+        </svg>
+        {{ option.label }}</a
+      >
+    </div>
   </div>
 </div>
 
 <footer>
-  <div class="awesome">CSS IS AWESOME</div>
-  <div class="logo">nabthat</div>
+  <div class="footer-child"><div class="awesome">CSS IS AWESOME</div></div>
+  <div class="footer-child flex-2"><div class="logo">nabthat</div></div>
 
-  <button (click)="showMenu($event)" [ngClass]="menuVisible ? 'visible' : ''">
-    Pokaż
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+  <div class="footer-child">
+    <button
+      (click)="toggleMenu($event)"
+      [ngClass]="menuVisible ? 'visible' : ''"
     >
-      <path
-        d="M17.6569 16.2427L19.0711 14.8285L12.0001 7.75739L4.92896 14.8285L6.34317 16.2427L12.0001 10.5858L17.6569 16.2427Z"
-        fill="currentColor"
-      />
-    </svg>
-  </button>
+      Pokaż
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.6569 16.2427L19.0711 14.8285L12.0001 7.75739L4.92896 14.8285L6.34317 16.2427L12.0001 10.5858L17.6569 16.2427Z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+  </div>
 </footer>

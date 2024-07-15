@@ -11,5 +11,12 @@ import { HeaderComponent } from './layout/header/header.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  showAuthor: boolean = false;
+  showNameInHeader() {
+    this.showAuthor = true;
+  }
+  onReset() {
+    window.location.reload();
+  }
   title = 'nabthat';
 }
