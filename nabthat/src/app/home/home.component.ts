@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   selectedArticle: Article = { id: 0, content: '' };
   private articles: Article[] = [];
   renderedArticles: Article[] = [];
-  option: string | number = 0;
+  option = 0;
   options: { id: number; label: string }[] = [
     { id: 0, label: 'Opcja pierwsza' },
     { id: 1, label: 'Opcja druga' },
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
   isEditModalVisible: boolean = false;
   isAddModalVisible: boolean = false;
 
-  onOptionChanged(option: string) {
+  onOptionChanged(option: any) {
     this.option = option;
   }
 
