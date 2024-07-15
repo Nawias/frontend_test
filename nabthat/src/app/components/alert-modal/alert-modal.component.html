@@ -6,6 +6,7 @@
     </p>
   </div>
   <div class="modal-footer">
-    <button class="btn" (click)="closeModal()">OK</button>
+    <button class="btn" *ngIf="dialog" (click)="okClicked()">OK</button>
+    <button class="btn" (click)="closeModal()">Zamknij</button>
   </div>
 </div>

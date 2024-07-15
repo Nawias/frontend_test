@@ -5,6 +5,8 @@ import { ArticleService } from '../services/article.service';
 import { Article } from '../../types';
 import { AlertModalComponent } from '../components/alert-modal/alert-modal.component';
 import { CommonModule } from '@angular/common';
+import { ArticleComponent } from '../components/article/article.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,8 @@ import { CommonModule } from '@angular/common';
     RadiobuttonsComponent,
     AlertModalComponent,
     CommonModule,
+    FormsModule,
+    ArticleComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -25,7 +29,7 @@ export class HomeComponent implements OnInit {
     'Nie znaleziono treści, które nie zostały już doklejone.';
 
   constructor(private articleService: ArticleService) {}
-
+  selectedArticle: Article = { id: 0, content: '' };
   private articles: Article[] = [];
   renderedArticles: Article[] = [];
   option: number = 0;
@@ -37,14 +41,16 @@ export class HomeComponent implements OnInit {
 
   showAlert(message: string) {
     this.alertMessage = message;
-    this.isModalVisible = true;
+    this.isAlertModalVisible = true;
   }
 
   hideAlert() {
-    this.isModalVisible = false;
+    this.isAlertModalVisible = false;
   }
   alertMessage: string = '';
-  isModalVisible: boolean = false;
+  isAlertModalVisible: boolean = false;
+  isDeleteModalVisible: boolean = false;
+  isEditModalVisible: boolean = false;
 
   onOptionChanged(option: number) {
     this.option = option;
@@ -97,11 +103,44 @@ export class HomeComponent implements OnInit {
       this.renderedArticles = [article];
     }
   }
+
+  toggleAddModal() {}
+
+  openDeleteModal(article: Article) {
+    this.isDeleteModalVisible = true;
+    this.selectedArticle = article;
+  }
+  confirmDelete(shouldDelete: boolean) {
+    this.isDeleteModalVisible = false;
+    if (shouldDelete) {
+      this.articleService.delete(this.selectedArticle.id);
+      this.selectedArticle = { id: 0, content: '' };
+      this.fetchArticles();
+    }
+  }
+
+  openEditModal(article: Article) {
+    this.selectedArticle = article;
+    this.isEditModalVisible = true;
+  }
+  confirmEdit(shouldSubmit: boolean) {
+    this.isEditModalVisible = false;
+    if (shouldSubmit) {
+      this.articleService.edit(this.selectedArticle);
+    }
+    this.fetchArticles();
+  }
+
+  private fetchArticles() {
+    this.articles = this.articleService.getArticles();
+    this.renderedArticles = [];
+    this.renderedArticles.push(this.articles[0]);
+  }
+
   ngOnInit() {
     this.articleService.isReady.subscribe((isReady) => {
       if (isReady) {
-        this.articles = this.articleService.getArticles();
-        this.renderedArticles.push(this.articles[0]);
+        this.fetchArticles();
       }
     });
   }

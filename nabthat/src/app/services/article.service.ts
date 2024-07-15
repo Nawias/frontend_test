@@ -58,4 +58,10 @@ export class ArticleService {
   add(content: string) {
     this.localStorageService.addEntry(content);
   }
+  edit(article: Article) {
+    this.localStorageService.updateEntry(
+      article.id.toString(),
+      article.content
+    );
+  }
 }
