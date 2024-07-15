@@ -143,7 +143,7 @@ export class HomeComponent implements OnInit {
     if (shouldSubmit && this.selectedArticle.content.trim().length < 1) {
       this.openDeleteModal(this.selectedArticle);
     } else if (shouldSubmit) {
-      this.articleService.add(this.selectedArticle.content);
+      this.articleService.edit(this.selectedArticle);
     }
     this.fetchArticles();
   }
