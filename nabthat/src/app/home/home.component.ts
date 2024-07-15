@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
     'Nie znaleziono treści, które nie zostały już doklejone.';
   private readonly NoArticlesMessage: string =
     'W bazie nie ma wystarczająco treści, aby wykonać tą operację. Zresetuj ustawienia lub dodaj nowe artykuły.';
+  private readonly EmptyArticleNotAddedMessage: string =
+    'Nie dodano pustego artykułu.';
 
   constructor(private articleService: ArticleService) {}
   selectedArticle: Article = { id: 0, content: '' };
@@ -134,8 +136,10 @@ export class HomeComponent implements OnInit {
   }
   confirmEdit(shouldSubmit: boolean) {
     this.isEditModalVisible = false;
-    if (shouldSubmit) {
-      this.articleService.edit(this.selectedArticle);
+    if (shouldSubmit && this.selectedArticle.content.trim().length < 1) {
+      this.openDeleteModal(this.selectedArticle);
+    } else if (shouldSubmit) {
+      this.articleService.add(this.selectedArticle.content);
     }
     this.fetchArticles();
   }
@@ -146,7 +150,9 @@ export class HomeComponent implements OnInit {
   }
   confirmAdd(shouldSubmit: boolean) {
     this.isAddModalVisible = false;
-    if (shouldSubmit) {
+    if (shouldSubmit && this.selectedArticle.content.trim().length < 1) {
+      this.showAlert(this.EmptyArticleNotAddedMessage);
+    } else if (shouldSubmit) {
       this.articleService.add(this.selectedArticle.content);
     }
     this.fetchArticles();

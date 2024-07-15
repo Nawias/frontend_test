@@ -6,4 +6,14 @@ export const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
+  // Test route to check if the logo link is working
+  {
+    path: 'test',
+    component: HomeComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];
