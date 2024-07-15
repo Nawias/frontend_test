@@ -17,6 +17,17 @@
     <app-block
       header="blok z długą nazwą która sama się przytnie dzięki stylom"
     >
+      <app-article
+        [readonly]="true"
+        [article]="{
+          id: 0,
+          content:
+            '
+      Nie ma żadnych artykułów do wyświetlenia'
+        }"
+        *ngIf="renderedArticles.length < 1"
+      >
+      </app-article>
       @for (article of renderedArticles; track article.id) {
       <app-article
         [article]="article"
