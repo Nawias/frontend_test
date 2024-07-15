@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ArticleService {
-  private URL = '/articles.json';
+  private URL = './articles.json';
   constructor(private httpClient: HttpClient) {}
 
   getArticles(): Observable<Article[]> {
