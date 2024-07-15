@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
     'Ta treść już została doklejona i nie może zostać doklejona ponownie.';
   private readonly NoUniqueRandomArticleMessage: string =
     'Nie znaleziono treści, które nie zostały już doklejone.';
+  private readonly NoArticlesMessage: string =
+    'W bazie nie ma wystarczająco treści, aby wykonać tą operację. Zresetuj ustawienia lub dodaj nowe artykuły.';
 
   constructor(private articleService: ArticleService) {}
   selectedArticle: Article = { id: 0, content: '' };
@@ -80,6 +82,10 @@ export class HomeComponent implements OnInit {
   }
 
   addArticle() {
+    if (this.articles.length < Math.max(this.option + 1, 1)) {
+      this.showAlert(this.NoArticlesMessage);
+      return;
+    }
     if (this.option >= 0) {
       const article = this.articles[this.option];
       if (this.renderedArticles.includes(article)) {
@@ -97,6 +103,10 @@ export class HomeComponent implements OnInit {
     }
   }
   replaceArticle() {
+    if (this.articles.length < Math.max(this.option + 1, 1)) {
+      this.showAlert(this.NoArticlesMessage);
+      return;
+    }
     if (this.option >= 0) {
       this.renderedArticles = [this.articles[this.option]];
     } else {
@@ -145,7 +155,9 @@ export class HomeComponent implements OnInit {
   private fetchArticles() {
     this.articles = this.articleService.getArticles();
     this.renderedArticles = [];
-    this.renderedArticles.push(this.articles[0]);
+    if (this.articles.length > 0) {
+      this.renderedArticles.push(this.articles[0]);
+    }
   }
 
   ngOnInit() {

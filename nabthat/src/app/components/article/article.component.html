@@ -1,5 +1,5 @@
 <article>
-  <div class="menu">
+  <div *ngIf="!readonly" class="menu">
     <button (click)="edit.emit()">✏️</button>
     <button (click)="delete.emit()">🗑️</button>
   </div>
