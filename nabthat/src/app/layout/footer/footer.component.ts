@@ -22,8 +22,7 @@ export class FooterComponent {
     { label: 'Pokaż dane osobowe', action: 'showName' },
   ];
 
-  toggleMenu(arg: any) {
-    console.log(arg);
+  toggleMenu() {
     this.menuVisible = !this.menuVisible;
   }
   onClick(action: MenuAction) {

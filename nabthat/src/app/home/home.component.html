@@ -12,16 +12,55 @@
         Zastąp
       </button>
       <button type="button" class="btn" (click)="addArticle()">Doklej</button>
+      <button type="button" class="btn" (click)="openAddModal()">Dodaj</button>
     </app-block>
     <app-block
       header="blok z długą nazwą która sama się przytnie dzięki stylom"
     >
       @for (article of renderedArticles; track article.id) {
-      <article>{{ article.content }}</article>
+      <app-article
+        [article]="article"
+        (edit)="openEditModal(article)"
+        (delete)="openDeleteModal(article)"
+      ></app-article>
       }
     </app-block>
   </div>
 </div>
-<app-alert-modal *ngIf="isModalVisible" (close)="hideAlert()">{{
+<app-alert-modal *ngIf="isAlertModalVisible" (close)="hideAlert()">{{
   alertMessage
 }}</app-alert-modal>
+<app-alert-modal
+  *ngIf="isDeleteModalVisible"
+  [dialog]="true"
+  (close)="confirmDelete(false)"
+  (ok)="confirmDelete(true)"
+>
+  Usunąć artykuł?
+</app-alert-modal>
+<app-alert-modal
+  *ngIf="isEditModalVisible"
+  [dialog]="true"
+  (close)="confirmEdit(false)"
+  (ok)="confirmEdit(true)"
+>
+  <h2>Edytuj artykuł</h2>
+  <textarea
+    class="editor"
+    rows="4"
+    [(ngModel)]="selectedArticle.content"
+  ></textarea>
+</app-alert-modal>
+<app-alert-modal
+  *ngIf="isAddModalVisible"
+  [dialog]="true"
+  (close)="confirmAdd(false)"
+  (ok)="confirmAdd(true)"
+>
+  <h2>Dodaj artykuł</h2>
+  <textarea
+    class="editor"
+    rows="4"
+    [(ngModel)]="selectedArticle.content"
+  ></textarea>
+</app-alert-modal>

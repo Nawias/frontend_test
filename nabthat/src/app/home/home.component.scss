@@ -36,8 +36,22 @@
     }
   }
 }
-article {
-  color: var(--article-color);
-  text-align: center;
+.editor {
+  width: 90%;
+  background-color: transparent;
+  color: var(--body-color);
+  border: 0.1em solid var(--button-border-color);
+  border-radius: 0.2em;
+  margin: 1em 0;
+  padding: 0.5em;
+
+  font-family: inherit;
+  font-size: 1.2rem;
   font-weight: 100;
+
+  resize: none;
+}
+app-article {
+  min-width: 80%;
+  width: 100%;
 }

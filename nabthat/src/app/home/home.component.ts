@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BlockComponent } from '../components/block/block.component';
 import { RadiobuttonsComponent } from '../components/radiobuttons/radiobuttons.component';
 import { ArticleService } from '../services/article.service';
 import { Article } from '../../types';
 import { AlertModalComponent } from '../components/alert-modal/alert-modal.component';
 import { CommonModule } from '@angular/common';
-import { arrRemove } from 'rxjs/internal/util/arrRemove';
+import { ArticleComponent } from '../components/article/article.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -15,16 +16,20 @@ import { arrRemove } from 'rxjs/internal/util/arrRemove';
     RadiobuttonsComponent,
     AlertModalComponent,
     CommonModule,
+    FormsModule,
+    ArticleComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   private readonly SameArticleMessage: string =
     'Ta treść już została doklejona i nie może zostać doklejona ponownie.';
   private readonly NoUniqueRandomArticleMessage: string =
     'Nie znaleziono treści, które nie zostały już doklejone.';
+
   constructor(private articleService: ArticleService) {}
+  selectedArticle: Article = { id: 0, content: '' };
   private articles: Article[] = [];
   renderedArticles: Article[] = [];
   option: number = 0;
@@ -36,14 +41,17 @@ export class HomeComponent {
 
   showAlert(message: string) {
     this.alertMessage = message;
-    this.isModalVisible = true;
+    this.isAlertModalVisible = true;
   }
 
   hideAlert() {
-    this.isModalVisible = false;
+    this.isAlertModalVisible = false;
   }
   alertMessage: string = '';
-  isModalVisible: boolean = false;
+  isAlertModalVisible: boolean = false;
+  isDeleteModalVisible: boolean = false;
+  isEditModalVisible: boolean = false;
+  isAddModalVisible: boolean = false;
 
   onOptionChanged(option: number) {
     this.option = option;
@@ -96,15 +104,55 @@ export class HomeComponent {
       this.renderedArticles = [article];
     }
   }
+
+  openDeleteModal(article: Article) {
+    this.isDeleteModalVisible = true;
+    this.selectedArticle = article;
+  }
+  confirmDelete(shouldDelete: boolean) {
+    this.isDeleteModalVisible = false;
+    if (shouldDelete) {
+      this.articleService.delete(this.selectedArticle.id);
+      this.selectedArticle = { id: 0, content: '' };
+      this.fetchArticles();
+    }
+  }
+
+  openEditModal(article: Article) {
+    this.selectedArticle = article;
+    this.isEditModalVisible = true;
+  }
+  confirmEdit(shouldSubmit: boolean) {
+    this.isEditModalVisible = false;
+    if (shouldSubmit) {
+      this.articleService.edit(this.selectedArticle);
+    }
+    this.fetchArticles();
+  }
+
+  openAddModal() {
+    this.selectedArticle = { id: 0, content: '' };
+    this.isAddModalVisible = true;
+  }
+  confirmAdd(shouldSubmit: boolean) {
+    this.isAddModalVisible = false;
+    if (shouldSubmit) {
+      this.articleService.add(this.selectedArticle.content);
+    }
+    this.fetchArticles();
+  }
+
+  private fetchArticles() {
+    this.articles = this.articleService.getArticles();
+    this.renderedArticles = [];
+    this.renderedArticles.push(this.articles[0]);
+  }
+
   ngOnInit() {
-    this.articleService.getArticles().subscribe({
-      next: (articles) => {
-        this.articles = articles;
-        this.renderedArticles.push(this.articles[0]);
-      },
-      error: (error) => {
-        console.error(error);
-      },
+    this.articleService.isReady.subscribe((isReady) => {
+      if (isReady) {
+        this.fetchArticles();
+      }
     });
   }
 }
