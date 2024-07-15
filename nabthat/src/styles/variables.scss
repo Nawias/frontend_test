@@ -2,15 +2,19 @@
   --bg-body-color: #2a2d36;
   --bg-footer-color: #15161a;
   --bg-header-color: #0b0c10;
+  --bg-popover-color: white;
 
   --body-color: white;
   --header-color: white;
   --footer-color: grey;
   --article-color: #a3a8b6;
   --button-color: #a3a8b6;
+  --popover-color: black;
 
   --footer-border-color: black;
   --button-border-color: white;
+
+  --popover-shadow: black;
 
   --header-logo-bg-color: #303030;
 
@@ -18,4 +22,5 @@
   --hover-color-2: #ce7400;
 
   --transition-duration: 120ms;
+  --animation-duration: 500ms;
 }

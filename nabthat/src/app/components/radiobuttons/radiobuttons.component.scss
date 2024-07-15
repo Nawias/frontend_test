@@ -14,11 +14,13 @@
 }
 
 label {
+  cursor: pointer;
   display: flex;
   gap: 1rem;
 }
 
 input[type="radio"] {
+  cursor: pointer;
   appearance: none;
   background-color: transparent;
   margin: 0;
