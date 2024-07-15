@@ -3,6 +3,11 @@ export interface Article {
   content: string;
 }
 
+export interface LocalStorageEntry {
+  key: string;
+  value: string;
+}
+
 export interface RadioOption {
   id: number;
   label: string;

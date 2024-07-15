@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BlockComponent } from '../components/block/block.component';
 import { RadiobuttonsComponent } from '../components/radiobuttons/radiobuttons.component';
 import { ArticleService } from '../services/article.service';
 import { Article } from '../../types';
 import { AlertModalComponent } from '../components/alert-modal/alert-modal.component';
 import { CommonModule } from '@angular/common';
-import { arrRemove } from 'rxjs/internal/util/arrRemove';
 
 @Component({
   selector: 'app-home',
@@ -19,12 +18,14 @@ import { arrRemove } from 'rxjs/internal/util/arrRemove';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   private readonly SameArticleMessage: string =
     'Ta treść już została doklejona i nie może zostać doklejona ponownie.';
   private readonly NoUniqueRandomArticleMessage: string =
     'Nie znaleziono treści, które nie zostały już doklejone.';
+
   constructor(private articleService: ArticleService) {}
+
   private articles: Article[] = [];
   renderedArticles: Article[] = [];
   option: number = 0;
@@ -97,14 +98,11 @@ export class HomeComponent {
     }
   }
   ngOnInit() {
-    this.articleService.getArticles().subscribe({
-      next: (articles) => {
-        this.articles = articles;
+    this.articleService.isReady.subscribe((isReady) => {
+      if (isReady) {
+        this.articles = this.articleService.getArticles();
         this.renderedArticles.push(this.articles[0]);
-      },
-      error: (error) => {
-        console.error(error);
-      },
+      }
     });
   }
 }
