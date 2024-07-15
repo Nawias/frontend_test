@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
   selectedArticle: Article = { id: 0, content: '' };
   private articles: Article[] = [];
   renderedArticles: Article[] = [];
-  option: number = 0;
+  option: string | number = 0;
   options: { id: number; label: string }[] = [
     { id: 0, label: 'Opcja pierwsza' },
     { id: 1, label: 'Opcja druga' },
@@ -57,8 +57,12 @@ export class HomeComponent implements OnInit {
   isEditModalVisible: boolean = false;
   isAddModalVisible: boolean = false;
 
-  onOptionChanged(option: number) {
+  onOptionChanged(option: string) {
     this.option = option;
+  }
+
+  getOption(): number {
+    return parseInt(this.option.toString());
   }
 
   getRandomReplaceArticle(): Article {
@@ -84,17 +88,17 @@ export class HomeComponent implements OnInit {
   }
 
   addArticle() {
-    if (this.articles.length < Math.max(this.option + 1, 1)) {
+    if (this.articles.length < Math.max(this.getOption() + 1, 1)) {
       this.showAlert(this.NoArticlesMessage);
       return;
     }
-    if (this.option >= 0) {
-      const article = this.articles[this.option];
+    if (this.getOption() >= 0) {
+      const article = this.articles[this.getOption()];
       if (this.renderedArticles.includes(article)) {
         this.showAlert(this.SameArticleMessage);
         return;
       }
-      this.renderedArticles.push(this.articles[this.option]);
+      this.renderedArticles.push(this.articles[this.getOption()]);
     } else {
       const article = this.getRandomUniqueArticle();
       if (article === undefined) {
@@ -105,12 +109,12 @@ export class HomeComponent implements OnInit {
     }
   }
   replaceArticle() {
-    if (this.articles.length < Math.max(this.option + 1, 1)) {
+    if (this.articles.length < Math.max(this.getOption() + 1, 1)) {
       this.showAlert(this.NoArticlesMessage);
       return;
     }
-    if (this.option >= 0) {
-      this.renderedArticles = [this.articles[this.option]];
+    if (this.getOption() >= 0) {
+      this.renderedArticles = [this.articles[this.getOption()]];
     } else {
       const article = this.getRandomReplaceArticle();
       this.renderedArticles = [article];
